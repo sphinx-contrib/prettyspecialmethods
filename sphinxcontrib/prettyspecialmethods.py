@@ -9,9 +9,9 @@
 """
 
 import pbr.version
-from sphinx.transforms import SphinxTransform
 import sphinx.addnodes as SphinxNodes
 from docutils.nodes import Text, emphasis, inline
+from sphinx.transforms import SphinxTransform
 
 if False:
     # For type annotations
@@ -176,7 +176,7 @@ def show_special_methods(app, what, name, obj, skip, options):
 
 
 def setup(app):
-    # type: (Sphinx) -> Dict[unicode, Any]
+    # type: (Sphinx) -> Dict[str, Any]
     app.add_transform(PrettifySpecialMethods)
     app.setup_extension('sphinx.ext.autodoc')
     app.connect('autodoc-skip-member', show_special_methods)

@@ -6,7 +6,7 @@ def test_domain_py_objects(app, status, warning):
     app.builder.build_all()
     result = (app.outdir / 'index.txt').read_text()
 
-    lines = [l.rstrip('\n') for l in result.splitlines() if l.strip()]
+    lines = [line.rstrip('\n') for line in result.splitlines() if line.strip()]
 
     assert lines == [
         'abs(self)',
