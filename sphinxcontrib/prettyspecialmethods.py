@@ -60,6 +60,8 @@ def unary_op_transformer(op):
             emphasis('', 'self'),
         )
 
+    return xf
+
 
 def binary_op_transformer(op):
     def xf(name_node, parameters_node):
@@ -176,5 +178,6 @@ def show_special_methods(app, what, name, obj, skip, options):
 def setup(app):
     # type: (Sphinx) -> Dict[unicode, Any]
     app.add_transform(PrettifySpecialMethods)
+    app.setup_extension('sphinx.ext.autodoc')
     app.connect('autodoc-skip-member', show_special_methods)
     return {'version': __version__, 'parallel_read_safe': True}
