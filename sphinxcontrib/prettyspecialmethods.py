@@ -40,10 +40,10 @@ def patch_node(node, text=None, children=None, *, constructor=None):
     )
 
 
-def function_transformer():
+def function_transformer(new_name):
     def xf(name_node, parameters_node):
         return (
-            patch_node(name_node, name_node.astext().strip('_'), ()),
+            patch_node(name_node, new_name, ()),
             patch_node(parameters_node, '', [
                 SphinxNodes.desc_parameter('', 'self'),
                 *parameters_node.children,
@@ -123,10 +123,11 @@ SPECIAL_METHODS = {
     '__gt__': binary_op_transformer('>'),
     '__ge__': binary_op_transformer('>='),
 
-    '__hash__': function_transformer(),
-    '__len__': function_transformer(),
-    '__str__': function_transformer(),
-    '__repr__': function_transformer(),
+    '__hash__': function_transformer('hash'),
+    '__len__': function_transformer('len'),
+    '__iter__': function_transformer('iter'),
+    '__str__': function_transformer('str'),
+    '__repr__': function_transformer('repr'),
 
     '__add__': binary_op_transformer('+'),
     '__sub__': binary_op_transformer('-'),
@@ -135,7 +136,7 @@ SPECIAL_METHODS = {
     '__truediv__': binary_op_transformer('/'),
     '__floordiv__': binary_op_transformer('//'),
     '__mod__': binary_op_transformer('%'),
-    '__divmod__': function_transformer(),
+    '__divmod__': function_transformer('divmod'),
     '__pow__': binary_op_transformer('**'),
     '__lshift__': binary_op_transformer('<<'),
     '__rshift__': binary_op_transformer('>>'),
@@ -145,8 +146,36 @@ SPECIAL_METHODS = {
 
     '__neg__': unary_op_transformer('-'),
     '__pos__': unary_op_transformer('+'),
-    '__abs__': function_transformer(),
+    '__abs__': function_transformer('abs'),
     '__invert__': unary_op_transformer('~'),
+
+    '__call__': lambda name_node, parameters_node: (
+        emphasis('', 'self'),
+        patch_node(parameters_node, '', parameters_node.children)
+    ),
+    '__getattr__': function_transformer('getattr'),
+    '__setattr__': function_transformer('setattr'),
+    '__delattr__': function_transformer('delattr'),
+
+    '__bool__': function_transformer('bool'),
+    '__int__': function_transformer('int'),
+    '__float__': function_transformer('float'),
+    '__complex__': function_transformer('complex'),
+    '__bytes__': function_transformer('bytes'),
+
+    # could show this as "{:...}".format(self) if we wanted
+    '__format__': function_transformer('format'),
+
+    '__index__': function_transformer('operator.index'),
+    '__length_hint__': function_transformer('operator.length_hint'),
+    '__ceil__': function_transformer('math.ceil'),
+    '__floor__': function_transformer('math.floor'),
+    '__trunc__': function_transformer('math.trunc'),
+    '__round__': function_transformer('round'),
+
+    '__sizeof__': function_transformer('sys.getsizeof'),
+    '__dir__': function_transformer('dir'),
+    '__reversed__': function_transformer('reversed'),
 }
 
 
