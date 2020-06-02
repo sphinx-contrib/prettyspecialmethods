@@ -1,6 +1,25 @@
+"""
+    sphinxcontrib.prettyspecialmethods
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Shows special methods as the python syntax that invokes them
+
+    :copyright: Copyright 2018 by Thomas Smith
+    :license: MIT, see LICENSE for details.
+"""
+
+import pbr.version
 from sphinx.transforms import SphinxTransform
 import sphinx.addnodes as SphinxNodes
 from docutils.nodes import Text, emphasis, inline
+
+if False:
+    # For type annotations
+    from typing import Any, Dict  # noqa
+    from sphinx.application import Sphinx  # noqa
+
+__version__ = pbr.version.VersionInfo(
+    'prettyspecialmethods').version_string()
 
 
 def patch_node(node, text=None, children=None, *, constructor=None):
@@ -152,3 +171,10 @@ class PrettifySpecialMethods(SphinxTransform):
 def show_special_methods(app, what, name, obj, skip, options):
     if what == 'class' and name in SPECIAL_METHODS and getattr(obj, '__doc__', None):
         return False
+
+
+def setup(app):
+    # type: (Sphinx) -> Dict[unicode, Any]
+    app.add_transform(PrettifySpecialMethods)
+    app.connect('autodoc-skip-member', show_special_methods)
+    return {'version': __version__, 'parallel_read_safe': True}
