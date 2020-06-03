@@ -56,6 +56,7 @@ def function_transformer(new_name):
 def unary_op_transformer(op):
     def xf(name_node, parameters_node):
         return (
+            SphinxNodes.desc_annotation('operator ', 'operator '),
             patch_node(name_node, op, ()),
             emphasis('', 'self'),
         )
@@ -65,13 +66,16 @@ def unary_op_transformer(op):
 
 def binary_op_transformer(op):
     def xf(name_node, parameters_node):
-        return inline(
-            '', '',
-            emphasis('', 'self'),
-            Text(' '),
-            patch_node(name_node, op, ()),
-            Text(' '),
-            emphasis('', parameters_node.children[0].astext())
+        return (
+            SphinxNodes.desc_annotation('operator ', 'operator '),
+            inline(
+                '', '',
+                emphasis('', 'self'),
+                Text(' '),
+                patch_node(name_node, op, ()),
+                Text(' '),
+                emphasis('', parameters_node.children[0].astext())
+            )
         )
 
     return xf
@@ -88,10 +92,13 @@ def brackets(parameters_node):
 
 SPECIAL_METHODS = {
     '__getitem__': lambda name_node, parameters_node: inline(
-        '', '', *brackets(parameters_node)
+        '', '',
+        SphinxNodes.desc_annotation('operator ', 'operator '),
+        *brackets(parameters_node)
     ),
     '__setitem__': lambda name_node, parameters_node: inline(
         '', '',
+        SphinxNodes.desc_annotation('operator ', 'operator '),
         *brackets(parameters_node),
         Text(' '),
         SphinxNodes.desc_name('', '', Text('=')),
@@ -103,12 +110,14 @@ SPECIAL_METHODS = {
     ),
     '__delitem__': lambda name_node, parameters_node: inline(
         '', '',
+        SphinxNodes.desc_annotation('operator ', 'operator '),
         SphinxNodes.desc_name('', '', Text('del')),
         Text(' '),
         *brackets(parameters_node),
     ),
     '__contains__': lambda name_node, parameters_node: inline(
         '', '',
+        SphinxNodes.desc_annotation('operator ', 'operator '),
         emphasis('', parameters_node.children[0].astext()),
         Text(' '),
         SphinxNodes.desc_name('', '', Text('in')),
@@ -150,6 +159,7 @@ SPECIAL_METHODS = {
     '__invert__': unary_op_transformer('~'),
 
     '__call__': lambda name_node, parameters_node: (
+        SphinxNodes.desc_annotation('operator ', 'operator '),
         emphasis('', 'self'),
         patch_node(parameters_node, '', parameters_node.children)
     ),
