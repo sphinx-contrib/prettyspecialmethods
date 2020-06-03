@@ -11,24 +11,27 @@ Overview
 --------
 
 This module renders docs like
-```
-.. method:: __add__(other)
-    Docstring
-```
+
+.. code-block:: rst
+
+    .. method:: __add__(other)
+        Docstring
+
+
 as
-```
+
 self + other
     Docstring
-```
+
 
 After installing this module, add the following to your `conf.py` to enable it
 
-```
-extensions = [
-    ...  # your other extensions
-    'sphinxcontrib.prettyspecialmethods',
-]
-```
+.. code-block:: python
+
+    extensions = [
+        ...  # your other extensions
+        'sphinxcontrib.prettyspecialmethods',
+    ]
 
 
 Links
