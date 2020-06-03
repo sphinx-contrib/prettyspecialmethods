@@ -10,7 +10,26 @@ Shows special methods as the python syntax that invokes them
 Overview
 --------
 
-Add a longer description here.
+This module renders docs like
+```
+.. method:: __add__(other)
+    Docstring
+```
+as
+```
+self + other
+    Docstring
+```
+
+After installing this module, add the following to your `conf.py` to enable it
+
+```
+extensions = [
+    ...  # your other extensions
+    'sphinxcontrib.prettyspecialmethods',
+]
+```
+
 
 Links
 -----
