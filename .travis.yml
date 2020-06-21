@@ -2,10 +2,18 @@ language: python
 sudo: false
 cache: pip
 python:
-- 3.5
 - 3.6
 - 3.7
+- 3.8
 install:
 - pip install tox-travis
 script:
 - tox
+deploy:
+  provider: pypi
+  user: __token__
+  password:
+    secure: laq0+FtDZPDggv8xUdMHfeJW73SZcYDPJEhjwkvkGlSNONFwEa86Ezxtsy17pzuGiiJc3aD/KYTeeMc7Ep20fbFGrcJ+U5BRSN+RrVkZySCf2h/UejZvkZ6rZgneQisg6fsCZXfv3nirLhWkGqjm5IZwCMjrT27c4rN2YmK2JXEY3Ju92rEEHXfi9LgYiwxAM1z7K8gNAXGEI9K0NiKEYcys7tauVG/ubHb9NAhzg/1eZGY+5yMl2LJAll0aFQtvr8DXCh03wMhwpVj1FWukOTlI00jLdjOF602l/4CcmLPE3AH2/p64ja8UoBNTRGbVLv//WcbSOz87xYXtav8KI7QNCAkqaaaduhjr5OmEDqm0E89QfC6qaOfYHBXebbE6tz4YLUOyDlyfM+dVKUvIaCo65GmzVwstbQ9HJrbBxR92wfIxLBOHxlziJNZ6dl9eJLNzDH2EQkmzer9gfOQBBuZi9dhaftqBJEHTzDgwOkJBxl+D6lH6Bf1McgP9LzutC5zYlwCTzomI1vjdBJrLwYCghoYV/TSXa8h6y+EMfKUE0LGGjTjyPPJ5/k/Ynj5K2/7qjVbySHvL3/oks2gD+tvZ+YAosvwuR/gOhS7lGDaeZeG5owDbr0AmfK8g2p6v6Sgj00FFgXJLZdG2mk5TtFYMR8OYl40x71DRmrKlr6g=
+  on:
+    tags: true
+    condition: "$TRAVIS_PYTHON_VERSION == 3.8"
