@@ -2,7 +2,12 @@
 sphinxcontrib-prettyspecialmethods
 ==================================
 
-.. image:: https://travis-ci.org/sphinx-contrib/prettyspecialmethods.svg?branch=master
+|badge-pypi| |badge-travis|
+
+.. |badge-pypi| image:: https://badgen.net/pypi/v/sphinxcontrib-prettyspecialmethods
+    :target: https://pypi.org/project/sphinxcontrib-prettyspecialmethods
+
+.. |badge-travis| image:: https://travis-ci.org/sphinx-contrib/prettyspecialmethods.svg?branch=master
     :target: https://travis-ci.org/sphinx-contrib/prettyspecialmethods
 
 Shows special methods as the python syntax that invokes them
