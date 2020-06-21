@@ -1,5 +1,7 @@
 misc (alphabetical)
 
+.. py:method:: __await__()
+
 .. py:method:: __call__(*args, **kwargs)
 
 .. py:method:: __dir__()

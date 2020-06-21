@@ -10,6 +10,7 @@ def test_domain_py_objects(app, status, warning):
 
     assert lines == [
         'misc (alphabetical)',
+        'await *self*',
         '*self*(*args, **kwargs)',
         'dir(self)',
         'format(self, fmt)',

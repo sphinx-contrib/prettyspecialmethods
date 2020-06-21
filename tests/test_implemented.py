@@ -129,7 +129,6 @@ unimplemented_ops = dict(
 
     # difficult to represent
     other_ops={
-        '__await__',
         '__class_getitem__',
         '__del__',
         '__dict__',

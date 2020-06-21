@@ -116,6 +116,13 @@ SPECIAL_METHODS = {
         emphasis('', 'self'),
     ),
 
+    '__await__': lambda name_node, parameters_node: inline(
+        '', '',
+        SphinxNodes.desc_name('', '', Text('await')),
+        Text(' '),
+        emphasis('', 'self'),
+    ),
+
     '__lt__': binary_op_transformer('<'),
     '__le__': binary_op_transformer('<='),
     '__eq__': binary_op_transformer('=='),
