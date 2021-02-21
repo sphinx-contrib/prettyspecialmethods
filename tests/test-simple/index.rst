@@ -1,4 +1,4 @@
-misc (alphabetical)
+# misc (alphabetical)
 
 .. py:method:: __await__()
 
@@ -14,7 +14,7 @@ misc (alphabetical)
 
 .. py:method:: __sizeof__()
 
-type coercion
+# type coercion
 
 .. py:method:: __str__()
 
@@ -30,7 +30,7 @@ type coercion
 
 .. py:method:: __index__()
 
-attribute access
+# attribute access
 
 .. py:method:: __getattr__(attr)
 
@@ -38,7 +38,7 @@ attribute access
 
 .. py:method:: __delattr__(attr)
 
-sequence methods
+# sequence methods
 
 .. py:method:: __contains__(value)
 
@@ -56,7 +56,7 @@ sequence methods
 
 .. py:method:: __reversed__()
 
-unary operators (alphabetical)
+# unary operators (alphabetical)
 
 .. py:method:: __invert__()
 
@@ -64,7 +64,7 @@ unary operators (alphabetical)
 
 .. py:method:: __pos__()
 
-binary operators (alphabetical)
+# binary operators (alphabetical)
 
 .. py:method:: __add__(other)
 
@@ -106,7 +106,7 @@ binary operators (alphabetical)
 
 .. py:method:: __xor__(other)
 
-other math
+# other math
 
 .. py:method:: __abs__()
 
