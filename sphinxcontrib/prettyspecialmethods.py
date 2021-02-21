@@ -41,11 +41,11 @@ def patch_node(node, text=None, children=None, *, constructor=None):
 
 
 def function_transformer(new_name):
-    def xf(name_node, parameters_node):
+    def xf(name_node, parameters_node, self_param):
         return (
             patch_node(name_node, new_name, ()),
             patch_node(parameters_node, '', [
-                SphinxNodes.desc_parameter('', 'self'),
+                SphinxNodes.desc_parameter('', self_param),
                 *parameters_node.children,
             ])
         )
@@ -54,20 +54,20 @@ def function_transformer(new_name):
 
 
 def unary_op_transformer(op):
-    def xf(name_node, parameters_node):
+    def xf(name_node, parameters_node, self_param):
         return (
             patch_node(name_node, op, ()),
-            emphasis('', 'self'),
+            emphasis('', self_param),
         )
 
     return xf
 
 
 def binary_op_transformer(op):
-    def xf(name_node, parameters_node):
+    def xf(name_node, parameters_node, self_param):
         return inline(
             '', '',
-            emphasis('', 'self'),
+            emphasis('', self_param),
             Text(' '),
             patch_node(name_node, op, ()),
             Text(' '),
@@ -77,9 +77,9 @@ def binary_op_transformer(op):
     return xf
 
 
-def brackets(parameters_node):
+def brackets(parameters_node, self_param):
     return [
-        emphasis('', 'self'),
+        emphasis('', self_param),
         SphinxNodes.desc_name('', '', Text('[')),
         emphasis('', parameters_node.children[0].astext()),
         SphinxNodes.desc_name('', '', Text(']')),
@@ -87,12 +87,12 @@ def brackets(parameters_node):
 
 
 SPECIAL_METHODS = {
-    '__getitem__': lambda name_node, parameters_node: inline(
-        '', '', *brackets(parameters_node)
+    '__getitem__': lambda name_node, parameters_node, self_param: inline(
+        '', '', *brackets(parameters_node, self_param)
     ),
-    '__setitem__': lambda name_node, parameters_node: inline(
+    '__setitem__': lambda name_node, parameters_node, self_param: inline(
         '', '',
-        *brackets(parameters_node),
+        *brackets(parameters_node, self_param),
         Text(' '),
         SphinxNodes.desc_name('', '', Text('=')),
         Text(' '),
@@ -101,26 +101,26 @@ SPECIAL_METHODS = {
             if len(parameters_node.children) > 1 else ''
         )),
     ),
-    '__delitem__': lambda name_node, parameters_node: inline(
+    '__delitem__': lambda name_node, parameters_node, self_param: inline(
         '', '',
         SphinxNodes.desc_name('', '', Text('del')),
         Text(' '),
-        *brackets(parameters_node),
+        *brackets(parameters_node, self_param),
     ),
-    '__contains__': lambda name_node, parameters_node: inline(
+    '__contains__': lambda name_node, parameters_node, self_param: inline(
         '', '',
         emphasis('', parameters_node.children[0].astext()),
         Text(' '),
         SphinxNodes.desc_name('', '', Text('in')),
         Text(' '),
-        emphasis('', 'self'),
+        emphasis('', self_param),
     ),
 
-    '__await__': lambda name_node, parameters_node: inline(
+    '__await__': lambda name_node, parameters_node, self_param: inline(
         '', '',
         SphinxNodes.desc_name('', '', Text('await')),
         Text(' '),
-        emphasis('', 'self'),
+        emphasis('', self_param),
     ),
 
     '__lt__': binary_op_transformer('<'),
@@ -156,8 +156,8 @@ SPECIAL_METHODS = {
     '__abs__': function_transformer('abs'),
     '__invert__': unary_op_transformer('~'),
 
-    '__call__': lambda name_node, parameters_node: (
-        emphasis('', 'self'),
+    '__call__': lambda name_node, parameters_node, self_param: (
+        emphasis('', self_param),
         patch_node(parameters_node, '', parameters_node.children)
     ),
     '__getattr__': function_transformer('getattr'),
@@ -202,7 +202,7 @@ class PrettifySpecialMethods(SphinxTransform):
             if method_name in SPECIAL_METHODS:
                 parameters_node = ref.next_node(SphinxNodes.desc_parameterlist)
 
-                name_node.replace_self(SPECIAL_METHODS[method_name](name_node, parameters_node))
+                name_node.replace_self(SPECIAL_METHODS[method_name](name_node, parameters_node, 'self'))
                 parameters_node.replace_self(())
 
 
