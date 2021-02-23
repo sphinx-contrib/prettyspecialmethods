@@ -83,6 +83,16 @@ def test_domain_py_objects(app, status, warning):
     assert lines == SIMPLE_RESULT
 
 
+@pytest.mark.sphinx(testroot='simple-self-param', buildername='text')
+def test_domain_py_objects_with_self_param(app, status, warning):
+    app.builder.build_all()
+    result = (app.outdir / 'index.txt').read_text()
+
+    lines = [line.rstrip('\n') for line in result.splitlines() if line.strip()]
+
+    assert lines == [line.replace('self', 'obj') for line in SIMPLE_RESULT]
+
+
 @pytest.mark.sphinx(testroot='autodoc', buildername='text')
 def test_autodoc_module(app, status, warning):
     app.builder.build_all()
@@ -92,5 +102,22 @@ def test_autodoc_module(app, status, warning):
 
     expected = [line for line in SIMPLE_RESULT if not line.startswith('#')]
     expected.insert(0, 'class test_autodoc_module.MethodHolder')
+
+    assert lines == expected
+
+
+@pytest.mark.sphinx(testroot='autodoc-self-param', buildername='text')
+def test_autodoc_module_with_self_param(app, status, warning):
+    app.builder.build_all()
+    result = (app.outdir / 'index.txt').read_text()
+
+    lines = [line.strip() for line in result.splitlines() if line.strip()]
+
+    expected = [
+        line.replace('self', 'obj')
+        for line in SIMPLE_RESULT
+        if not line.startswith('#')
+    ]
+    expected.insert(0, 'class test_autodoc_self_param_module.MethodHolder')
 
     assert lines == expected
