@@ -8,15 +8,14 @@
     :license: MIT, see LICENSE for details.
 """
 
+from typing import Any, Dict
+
 import pbr.version
 import sphinx.addnodes as SphinxNodes
 from docutils.nodes import Text, emphasis, inline
+from sphinx.application import Sphinx
 from sphinx.transforms import SphinxTransform
 
-if False:
-    # For type annotations
-    from typing import Any, Dict  # noqa
-    from sphinx.application import Sphinx  # noqa
 
 __version__ = pbr.version.VersionInfo(
     'prettyspecialmethods').version_string()
@@ -211,8 +210,7 @@ def show_special_methods(app, what, name, obj, skip, options):
         return False
 
 
-def setup(app):
-    # type: (Sphinx) -> Dict[str, Any]
+def setup(app: Sphinx) -> Dict[str, Any]:
     app.add_transform(PrettifySpecialMethods)
     app.setup_extension('sphinx.ext.autodoc')
     app.connect('autodoc-skip-member', show_special_methods)
