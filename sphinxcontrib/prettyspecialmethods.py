@@ -8,7 +8,7 @@
     :license: MIT, see LICENSE for details.
 """
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import pbr.version
 import sphinx.addnodes as SphinxNodes
@@ -205,9 +205,17 @@ class PrettifySpecialMethods(SphinxTransform):
                 parameters_node.replace_self(())
 
 
-def show_special_methods(app, what, name, obj, skip, options):
+def show_special_methods(
+    app: Sphinx,
+    what: str,
+    name: str,
+    obj: Any,
+    skip: bool,
+    options: Dict[str, Any],
+) -> Optional[bool]:
     if what == 'class' and name in SPECIAL_METHODS and getattr(obj, '__doc__', None):
         return False
+    return None
 
 
 def setup(app: Sphinx) -> Dict[str, Any]:
