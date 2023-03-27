@@ -19,7 +19,7 @@ if False:
     from sphinx.application import Sphinx  # noqa
 
 __version__ = pbr.version.VersionInfo(
-    'prettyspecialmethods').version_string()
+    'sphinxcontrib-prettyspecialmethods').version_string()
 
 
 def patch_node(node, text=None, children=None, *, constructor=None):
