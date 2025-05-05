@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import functools
+import operator
 import re
 
 import pytest
@@ -107,50 +111,46 @@ all_methods = {
 }
 
 # not listed in the page above
-all_methods |= {'__sizeof__'}
+all_methods |= {"__sizeof__"}
 
 
 unimplemented_ops = dict(
     # not implemented
-    inplace_ops={re.sub('^__', '__i', m) for m in all_methods} & all_methods,
-
+    inplace_ops={re.sub("^__", "__i", m) for m in all_methods} & all_methods,
     # typically redundant
-    reverse_ops={re.sub('^__', '__r', m) for m in all_methods} & all_methods,
-
-    # diffult to show clearly
-    descriptor_ops={'__get__', '__set__', '__delete__', '__set_name__'},
-
+    reverse_ops={re.sub("^__", "__r", m) for m in all_methods} & all_methods,
+    # difficult to show clearly
+    descriptor_ops={"__get__", "__set__", "__delete__", "__set_name__"},
     # unclear whether to apply the formatting to enter or exit
-    with_ops={'__enter__', '__exit__'},
-    async_with_ops={'__aenter__', '__aexit__'},
-
+    with_ops={"__enter__", "__exit__"},
+    async_with_ops={"__aenter__", "__aexit__"},
     # no aiter or anext builtin
-    async_iter_ops={'__aiter__', '__anext__'},
-
+    async_iter_ops={"__aiter__", "__anext__"},
     # difficult to represent
     other_ops={
-        '__class_getitem__',
-        '__del__',
-        '__dict__',
-        '__getattribute__',
-        '__init__',
-        '__init_subclass__',
-        '__missing__',
-        '__new__',
-        '__slots__',
+        "__class_getitem__",
+        "__del__",
+        "__dict__",
+        "__getattribute__",
+        "__init__",
+        "__init_subclass__",
+        "__missing__",
+        "__new__",
+        "__slots__",
     },
 )
 
 
-@pytest.mark.parametrize("unimplemented", [
-    pytest.param(v, id=k) for k, v in unimplemented_ops.items()
-])
+@pytest.mark.parametrize(
+    "unimplemented", [pytest.param(v, id=k) for k, v in unimplemented_ops.items()]
+)
 def test_not_implemented(unimplemented):
-    """ Test that the sets above are accurate """
+    """Test that the sets above are accurate"""
     assert all_methods & unimplemented == unimplemented
     assert SPECIAL_METHODS.keys() & unimplemented == set()
 
 
 def test_lists_exhaustive():
-    implemented = all_methods - set.union(*unimplemented_ops.values())
+    unimplemented_methods = functools.reduce(operator.or_, unimplemented_ops.values())
+    implemented = all_methods - unimplemented_methods
     assert set(SPECIAL_METHODS.keys()) == implemented
