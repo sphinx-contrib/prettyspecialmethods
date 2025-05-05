@@ -47,3 +47,6 @@ ChangeLog
 *~
 .*.swp
 .*sw?
+
+# Nox venvs
+.nox/
