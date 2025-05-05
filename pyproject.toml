@@ -2,6 +2,50 @@
 requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "sphinxcontrib-prettyspecialmethods"
+description = "Shows special methods as the python syntax that invokes them"
+readme = "README.rst"
+authors = [{name = "Thomas Smith"}]
+maintainers = [
+    {name = "Eric Wieser"},
+    {name = "Kaleb Barrett", email = "dev.ktbarrett@gmail.com"},
+]
+license = "MIT"
+license-files = [
+    "LICENSE",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Framework :: Sphinx :: Extension",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Documentation",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Utilities",
+]
+requires-python = ">=3.9"
+dependencies = ["sphinx"]
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/sphinx-contrib/prettyspecialmethods"
+"Bug Tracker" = "https://github.com/sphinx-contrib/prettyspecialmethods/issues"
+"Source Code" = "https://github.com/sphinx-contrib/prettyspecialmethods"
+
+[tool.setuptools.dynamic]
+version = {attr = "sphinxcontrib.prettyspecialmethods.__version__"}
+
+
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "UP", "RUF"]
 ignore = [
@@ -13,3 +57,17 @@ required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.format]
 docstring-code-format = true
+
+[tool.mypy]
+show_column_numbers = true
+show_error_context = true
+ignore_missing_imports = true
+follow_imports = "skip"
+incremental = true
+check_untyped_defs = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+markers = [
+    "sphinx"
+]
