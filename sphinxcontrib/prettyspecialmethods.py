@@ -10,14 +10,12 @@ Shows special methods as the python syntax that invokes them
 
 from __future__ import annotations
 
+from typing import Any
+
 import sphinx.addnodes as SphinxNodes
 from docutils.nodes import Text, emphasis, inline
+from sphinx.application import Sphinx
 from sphinx.transforms import SphinxTransform
-
-if False:
-    # For type annotations
-    from typing import Any, Dict  # noqa
-    from sphinx.application import Sphinx  # noqa
 
 __version__ = "0.2.dev"
 
@@ -217,8 +215,7 @@ def show_special_methods(app, what, name, obj, skip, options):
         return False
 
 
-def setup(app):
-    # type: (Sphinx) -> Dict[str, Any]
+def setup(app: Sphinx) -> dict[str, Any]:
     app.add_transform(PrettifySpecialMethods)
     app.setup_extension("sphinx.ext.autodoc")
     app.connect("autodoc-skip-member", show_special_methods)
