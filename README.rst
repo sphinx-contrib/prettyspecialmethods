@@ -1,14 +1,14 @@
+.. image:: https://results.pre-commit.ci/badge/github/sphinx-contrib/prettyspecialmethods/master.svg
+    :target: https://results.pre-commit.ci/latest/github/sphinx-contrib/prettyspecialmethods/master
+    :alt: pre-commit.ci status
+
+.. image:: https://github.com/sphinx-contrib/prettyspecialmethods/actions/workflows/tests.yaml/badge.svg?branch=master
+    :target: https://github.com/sphinx-contrib/prettyspecialmethods/actions/workflows/tests.yaml
+    :alt: Github Actions status
+
 ==================================
 sphinxcontrib-prettyspecialmethods
 ==================================
-
-|badge-pypi| |badge-travis|
-
-.. |badge-pypi| image:: https://badgen.net/pypi/v/sphinxcontrib-prettyspecialmethods
-    :target: https://pypi.org/project/sphinxcontrib-prettyspecialmethods
-
-.. |badge-travis| image:: https://travis-ci.org/sphinx-contrib/prettyspecialmethods.svg?branch=master
-    :target: https://travis-ci.org/sphinx-contrib/prettyspecialmethods
 
 Shows special methods as the python syntax that invokes them
 
@@ -29,6 +29,16 @@ self + other
     Docstring
 
 
+Installing
+----------
+
+Install this fork directly from github:
+
+.. code-block:: sh
+
+    pip install sphinxcontrib-prettyspecialmethods
+
+
 After installing this module, add the following to your `conf.py` to enable it
 
 .. code-block:: python
@@ -37,10 +47,3 @@ After installing this module, add the following to your `conf.py` to enable it
         ...  # your other extensions
         'sphinxcontrib.prettyspecialmethods',
     ]
-
-
-Links
------
-
-- Source: https://github.com/sphinx-contrib/prettyspecialmethods
-- Bugs: https://github.com/sphinx-contrib/prettyspecialmethods/issues
