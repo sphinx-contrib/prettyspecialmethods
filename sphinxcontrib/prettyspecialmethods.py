@@ -215,13 +215,7 @@ class PrettifySpecialMethods(SphinxTransform):
                 parameters_node.replace_self(())
 
 
-def show_special_methods(app, what, name, obj, skip, options):
-    if what == "class" and name in SPECIAL_METHODS and getattr(obj, "__doc__", None):
-        return False
-
-
 def setup(app: Sphinx) -> dict[str, Any]:
     app.add_transform(PrettifySpecialMethods)
     app.setup_extension("sphinx.ext.autodoc")
-    app.connect("autodoc-skip-member", show_special_methods)
     return {"version": __version__, "parallel_read_safe": True}
